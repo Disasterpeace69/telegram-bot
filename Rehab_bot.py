@@ -1,65 +1,45 @@
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 
-# توكن البوت
-TOKEN = "YOUR_BOT_TOKEN"
-
-# معرف الأدمن (التليجرام ID الخاص بك)
-ADMIN_CHAT_ID = "YOUR_TELEGRAM_ID"
-
 # دالة بدء البوت
-def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text(
-        'مرحبًا! أنا بوت اخصائي التأهيل الحركي المنزلي. كيف يمكنني مساعدتك؟\n\n'
-        'للاطلاع على خدماتنا وأسعار الجلسات، أرسل "تفاصيل".\n'
-        'لحجز جلسة، أرسل "حجز جلسة".'
-    )
+async def start(update: Update, context: CallbackContext) -> None:
+    await update.message.reply_text('مرحبًا! أنا بوت اخصائي التأهيل الحركي المنزلي. كيف يمكنني مساعدتك؟\n\nاكتب "تفاصيل" لمعرفة الأسعار والخدمات المتاحة.')
 
-# دالة عرض تفاصيل الخدمات والأسعار
-def show_details(update: Update, context: CallbackContext) -> None:
-    details = '''
-    🔹 *خدماتنا وأسعار الجلسات:*  
-    1️⃣ حجامة + فوطة نارية – *250 جنيه*  
-    2️⃣ مساج ظهر + فوطة نارية + تأهيل يدوي – *250 جنيه*  
-    3️⃣ جهاز TENS + تأهيل يدوي – *200 جنيه*  
-    4️⃣ حجامة + مساج ظهر + تأهيل يدوي + Infrared – *350 جنيه*  
-    5️⃣ مساج للجسم كامل + فوطة نارية – *300 جنيه*  
-    6️⃣ جلسة شاملة (مساج + TENS + فوطة نارية + حجامة + Infrared + تأهيل يدوي) – *450 جنيه*  
-
-    📍 *المكان:* الإسكندرية  
-    📞 *للحجز:* 01221903509  
-    '''
-    update.message.reply_text(details, parse_mode="Markdown")
+# دالة إرسال تفاصيل الخدمات والأسعار
+async def send_details(update: Update, context: CallbackContext) -> None:
+    details = """
+    🔹 *الخدمات المتاحة والأسعار:*
+    
+    1️⃣ *حجامة + فوطه نارية* - 250 جنيه  
+    2️⃣ *مساج ظهر + فوطه نارية + تأهيل يدوي* - 250 جنيه  
+    3️⃣ *جهاز TENS + تأهيل يدوي* - 200 جنيه  
+    4️⃣ *حجامة + مساج ظهر + تأهيل يدوي + Infra Red* - 350 جنيه  
+    5️⃣ *مساج كامل للجسم (ظهر + كتف + ذراع + رجلين) + فوطه نارية* - 300 جنيه  
+    6️⃣ *مساج للجسم + TENS + فوطه نارية + حجامة + Infra Red + تأهيل يدوي* - 450 جنيه  
+    
+    📩 للحجز أو الاستفسار، أرسل "حجز جلسة" وسنتواصل معك في أقرب وقت.
+    """
+    await update.message.reply_text(details, parse_mode="Markdown")
 
 # دالة حجز الجلسة
-def book_session(update: Update, context: CallbackContext) -> None:
+async def book_session(update: Update, context: CallbackContext) -> None:
     user = update.message.from_user
-    user_info = f"🛎 *حجز جديد!*\n👤 الاسم: {user.first_name}\n📩 يوزر: @{user.username if user.username else 'لا يوجد'}\n🆔 ID: {user.id}"
-
-    # إرسال تأكيد الحجز للمستخدم
-    update.message.reply_text(
-        "✅ تم استلام طلب الحجز بنجاح!\n"
-        "📞 سنتواصل معك قريبًا لتأكيد التفاصيل.\n"
-        "📍 المكان: الإسكندرية\n"
-        "📩 رقم التواصل واتساب: 01221903509"
+    await update.message.reply_text(
+        f"✅ تم إضافة {user.first_name} للحجز.\n📞 رقم التواصل واتساب: 01221903509\n📍 المكان: الإسكندرية"
     )
 
-    # إرسال إشعار للأدمن
-    context.bot.send_message(chat_id=ADMIN_CHAT_ID, text=user_info, parse_mode="Markdown")
-
 # دالة للأوامر غير المعروفة
-def unknown(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("⚠️ لم أفهم طلبك، حاول مرة أخرى.")
+async def unknown(update: Update, context: CallbackContext) -> None:
+    await update.message.reply_text("⚠️ لم أفهم طلبك، حاول مرة أخرى.")
 
 def main():
-    app = Application.builder().token(TOKEN).build()
+    app = Application.builder().token("YOUR_BOT_TOKEN").build()
 
     # إضافة الأوامر
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("post_job_ad", show_details))  # لو عندك أمر للإعلان عن الوظيفة
-    app.add_handler(MessageHandler(filters.Regex("(?i)تفاصيل"), show_details))
-    app.add_handler(MessageHandler(filters.Regex("(?i)حجز جلسة"), book_session))
-    app.add_handler(MessageHandler(filters.COMMAND, unknown))
+    app.add_handler(MessageHandler(filters.Regex("(?i)تفاصيل|السعر|الجلسات"), send_details))  # رد عند طلب التفاصيل
+    app.add_handler(MessageHandler(filters.Regex("(?i)حجز جلسة"), book_session))  # رد عند طلب الحجز
+    app.add_handler(MessageHandler(filters.COMMAND, unknown))  # رد للأوامر غير المعروفة
 
     # تشغيل البوت
     print("✅ البوت يعمل الآن...")
