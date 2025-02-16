@@ -22,7 +22,7 @@ def book_session(update: Update, context: CallbackContext) -> None:
     user = update.message.from_user
     # يمكنك إضافة تفاصيل إضافية مثل رقم الهاتف أو المدينة لو كنت حابب
     الأسكندرية 
-    رقم التواصل واتس اب : 01221903509
+    "رقم التواصل واتس اب : 01221903509"
     update.message.reply_text(f"تم إضافة {user.first_name} للحجز. سنتواصل معك  قريبًا لتحديد موعد الجلسة.")
     
 # دالة خطأ للأوامر غير المعروفة
