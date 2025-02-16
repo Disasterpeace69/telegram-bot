@@ -2,10 +2,10 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 
 # توكن البوت
-TOKEN = "7850763372:AAFXLGc5ch3BlmBhe3Bn1tO34lvSt6JU7dQ"
+TOKEN = "YOUR_BOT_TOKEN"
 
 # معرف الأدمن (التليجرام ID الخاص بك)
-ADMIN_CHAT_ID = "@Zyaad2000"
+ADMIN_CHAT_ID = "YOUR_TELEGRAM_ID"
 
 # دالة بدء البوت
 def start(update: Update, context: CallbackContext) -> None:
@@ -15,7 +15,7 @@ def start(update: Update, context: CallbackContext) -> None:
         'لحجز جلسة، أرسل "حجز جلسة".'
     )
 
-# دالة عرض التفاصيل والأسعار
+# دالة عرض تفاصيل الخدمات والأسعار
 def show_details(update: Update, context: CallbackContext) -> None:
     details = '''
     🔹 *خدماتنا وأسعار الجلسات:*  
@@ -36,7 +36,7 @@ def book_session(update: Update, context: CallbackContext) -> None:
     user = update.message.from_user
     user_info = f"🛎 *حجز جديد!*\n👤 الاسم: {user.first_name}\n📩 يوزر: @{user.username if user.username else 'لا يوجد'}\n🆔 ID: {user.id}"
 
-    # إرسال رسالة تأكيد للمستخدم
+    # إرسال تأكيد الحجز للمستخدم
     update.message.reply_text(
         "✅ تم استلام طلب الحجز بنجاح!\n"
         "📞 سنتواصل معك قريبًا لتأكيد التفاصيل.\n"
@@ -47,7 +47,7 @@ def book_session(update: Update, context: CallbackContext) -> None:
     # إرسال إشعار للأدمن
     context.bot.send_message(chat_id=ADMIN_CHAT_ID, text=user_info, parse_mode="Markdown")
 
-# دالة خطأ للأوامر غير المعروفة
+# دالة للأوامر غير المعروفة
 def unknown(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("⚠️ لم أفهم طلبك، حاول مرة أخرى.")
 
@@ -56,6 +56,7 @@ def main():
 
     # إضافة الأوامر
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("post_job_ad", show_details))  # لو عندك أمر للإعلان عن الوظيفة
     app.add_handler(MessageHandler(filters.Regex("(?i)تفاصيل"), show_details))
     app.add_handler(MessageHandler(filters.Regex("(?i)حجز جلسة"), book_session))
     app.add_handler(MessageHandler(filters.COMMAND, unknown))
