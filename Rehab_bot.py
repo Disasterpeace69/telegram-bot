@@ -46,7 +46,7 @@ async def unknown(update: Update, context) -> None:
 
 def main():
     # استبدل 'YOUR_BOT_TOKEN' بالتوكن الخاص بك
-    app = Application.builder().token("YOUR_BOT_TOKEN").build()
+    app = Application.builder().token("7850763372:AAFXLGc5ch3BlmBhe3Bn1tO34lvSt6JU7dQ").build()
 
     # إضافة الأوامر
     app.add_handler(CommandHandler("start", start))
