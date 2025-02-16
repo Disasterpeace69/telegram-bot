@@ -21,6 +21,8 @@ def post_job_ad(update: Update, context: CallbackContext) -> None:
 def book_session(update: Update, context: CallbackContext) -> None:
     user = update.message.from_user
     # يمكنك إضافة تفاصيل إضافية مثل رقم الهاتف أو المدينة لو كنت حابب
+    الأسكندرية 
+    رقم التواصل واتس اب : 01221903509
     update.message.reply_text(f"تم إضافة {user.first_name} للحجز. سنتواصل معك  قريبًا لتحديد موعد الجلسة.")
     
 # دالة خطأ للأوامر غير المعروفة
@@ -29,7 +31,7 @@ def unknown(update: Update, context: CallbackContext) -> None:
 
 def main():
     # استبدال 'YOUR_API_TOKEN' بـ API Token الخاص بك
-    updater = Updater("8081186606:AAESLFefGZ69cKv-S1VODAf2UVgqbNOeIpE")
+    updater = Updater("7850763372:AAFXLGc5ch3BlmBhe3Bn1tO34lvSt6JU7dQ")
 
     # الحصول على الموزع
     dispatcher = updater.dispatcher
