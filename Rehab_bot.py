@@ -1,12 +1,12 @@
 from telegram import Update
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
+from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
 # دالة بدء البوت
-def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text('مرحبًا! أنا بوت اخصائي التأهيل الحركي المنزلي. كيف يمكنني مساعدتك؟')
+async def start(update: Update, context) -> None:
+    await update.message.reply_text('مرحبًا! أنا بوت اخصائي التأهيل الحركي المنزلي. كيف يمكنني مساعدتك؟')
 
 # دالة عرض إعلان الوظيفة
-def post_job_ad(update: Update, context: CallbackContext) -> None:
+async def post_job_ad(update: Update, context) -> None:
     job_ad = '''
     📢 *إعلان:*
     🏠 *اخصائي تأهيل حركي منزلي*  
@@ -16,18 +16,18 @@ def post_job_ad(update: Update, context: CallbackContext) -> None:
     🔹 تقديم جلسات تأهيل حركي في المنزل للأشخاص الذين يعانون من إصابات أو مشاكل حركية.  
     📩 للحجز أو الاستفسار، يرجى إرسال "حجز جلسة" وسنتواصل معك في أقرب وقت.
     '''
-    update.message.reply_text(job_ad, parse_mode="Markdown")
+    await update.message.reply_text(job_ad, parse_mode="Markdown")
 
 # دالة إضافة شخص مهتم بحجز جلسة
-def book_session(update: Update, context: CallbackContext) -> None:
+async def book_session(update: Update, context) -> None:
     user = update.message.from_user
-    update.message.reply_text(
+    await update.message.reply_text(
         f"✅ تم إضافة {user.first_name} للحجز.\n📞 رقم التواصل واتساب: 01221903509\n📍 المكان: الإسكندرية"
     )
 
 # دالة خطأ للأوامر غير المعروفة
-def unknown(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("⚠️ لم أفهم طلبك، حاول مرة أخرى.")
+async def unknown(update: Update, context) -> None:
+    await update.message.reply_text("⚠️ لم أفهم طلبك، حاول مرة أخرى.")
 
 def main():
     # استبدل 'YOUR_BOT_TOKEN' بالتوكن الخاص بك
@@ -45,3 +45,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
