@@ -1,4 +1,4 @@
-from telegram import Update
+from telegram import Update, InputMediaPhoto, InputMediaVideo
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 
 # توكن البوت
@@ -7,9 +7,27 @@ TOKEN = "7850763372:AAFXLGc5ch3BlmBhe3Bn1tO34lvSt6JU7dQ"
 # معرف الأدمن (التليجرام ID الخاص بك)
 ADMIN_CHAT_ID = "1237924790"
 
-# دالة بدء البوت
+# دالة بدء البوت مع إرسال الصور والفيديوهات
 async def start(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text('مرحبًا! أنا بوت اخصائي التأهيل الحركي المنزلي. كيف يمكنني مساعدتك؟\n\nاكتب "تفاصيل" لمعرفة الأسعار والخدمات المتاحة.')
+    await update.message.reply_text(
+        'مرحبًا! أنا بوت اخصائي التأهيل الحركي المنزلي. كيف يمكنني مساعدتك؟\n\n'
+        'اكتب "تفاصيل" لمعرفة الأسعار والخدمات المتاحة.'
+    )
+    
+    # إرسال مجموعة من الوسائط (6 صور و 4 فيديوهات)
+    media = [
+        InputMediaPhoto("https://i.postimg.cc/T1xbdkSb/IMG-20250218-170701-055-1.jpg"),  # استبدل بالرابط المباشر للصورة 1
+        InputMediaPhoto("https://i.postimg.cc/TPXfHZWn/Whats-App-Image-2025-02-18-at-5-17-12-PM-2.jpg"),  # استبدل بالرابط المباشر للصورة 2
+        InputMediaPhoto("https://i.postimg.cc/Gt4WpQyc/Whats-App-Image-2025-02-18-at-5-17-12-PM-1.jpg"),  # استبدل بالرابط المباشر للصورة 3
+        InputMediaPhoto("https://i.postimg.cc/9Qdvzzrq/Whats-App-Image-2025-02-18-at-5-17-00-PM.jpg"),  # استبدل بالرابط المباشر للصورة 4
+        InputMediaPhoto("https://i.postimg.cc/BvQ402Mv/Whats-App-Image-2025-02-18-at-5-17-09-PM.jpg"),  # استبدل بالرابط المباشر للصورة 5
+        InputMediaPhoto("https://i.postimg.cc/qRWTyS0t/Whats-App-Image-2025-02-16-at-11-41-28-PM.jpg"),  # استبدل بالرابط المباشر للصورة 6
+        # InputMediaVideo("https://example.com/video1.mp4"),  # استبدل بالرابط المباشر للفيديو 1
+        # InputMediaVideo("https://example.com/video2.mp4"),  # استبدل بالرابط المباشر للفيديو 2
+        # InputMediaVideo("https://example.com/video3.mp4"),  # استبدل بالرابط المباشر للفيديو 3
+        # InputMediaVideo("https://example.com/video4.mp4")   # استبدل بالرابط المباشر للفيديو 4
+    ]
+    await update.message.reply_media_group(media)
 
 # دالة إرسال تفاصيل الخدمات والأسعار
 async def send_details(update: Update, context: CallbackContext) -> None:
@@ -63,5 +81,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
