@@ -5,7 +5,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 TOKEN = "7850763372:AAFXLGc5ch3BlmBhe3Bn1tO34lvSt6JU7dQ"
 
 # معرف الأدمن (التليجرام ID الخاص بك)
-ADMIN_CHAT_ID = "@Zyaad2000"
+ADMIN_CHAT_ID = "1237924790"
 
 # دالة بدء البوت
 async def start(update: Update, context: CallbackContext) -> None:
