@@ -26,7 +26,7 @@ async def start(update: Update, context: CallbackContext) -> None:
     #     # InputMediaVideo("https://drive.google.com/uc?export=download&id=1berS2dwYYPqyZ7Mi3E458DSTlaP1-PJ1"),  # استبدل بالرابط المباشر للفيديو 2
     #     # InputMediaVideo("https://drive.google.com/uc?export=download&id=1bdth4G-l-J3Nty32icZKTi20ZAgo7nos"),  # استبدل بالرابط المباشر للفيديو 3
     #     # InputMediaVideo("https://drive.google.com/uc?export=download&id=1bda-VqD07rpV4TvIUrSZihm_wg459-bO")   # استبدل بالرابط المباشر للفيديو 4
-    # ]
+    ]
     await update.message.reply_media_group(media)
 
 # دالة إرسال تفاصيل الخدمات والأسعار
